@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .menu-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 20px;
+            width: 30%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .menu-item img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        .menu-item h3 {
+            margin: 10px 0;
+            color: #333;
+        }
+        .menu-item p {
+            color: #666;
+        }
+        .menu-item button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .menu-item button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Canteen</h1>
+        <div class="menu">
+            <div class="Fast Food">
+                <h1>Fast Food</h1>
+                {% for item in data['Fast Food'] %}
+                <div class="menu-item">
+                    <h2>{{item['NAME']}}</h2>
+                    <p>{{item['DESCRIPTION']}}</p>
+                    <p>{{item['PRICE']}}</p>
+                    <form action="{{ url_for('add_to_cart') }}" method="POST">
+                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                        <button type="submit">Add to cart</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="Nasta">
+                <h1>Nasta</h1>
+                {%for item in data['Nasta'] %}
+                <div class="menu-item">
+                    <h2>{{item['NAME']}}</h2>
+                    <p>{{item['DESCRIPTION']}}</p>
+                    <P>{{item['PRICE']}}</P>
+                    <form action="{{ url_for('add_to_cart') }}" method="POST">
+                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                        <button type="submit">Add to cart</button>
+                    </form>
+                </div>
+                {%endfor%}
+            </div>
+           <div class="Lunch">
+            <h1>Lunch</h1>
+            {%for item in data['Lunch'] %}
+            <div class="menu-item">
+                <h2>{{item['NAME']}}</h2>
+                <p>{{item['DESCRIPTION']}}</p>
+                <P>{{item['PRICE']}}</P>
+                <form action="{{ url_for('add_to_cart') }}" method="POST">
+                    <input type="hidden" name="item_id" value="{{item['ID']}}">
+                    <button type="submit">Add to cart</button>
+                </form>
+            </div>
+            {%endfor%}
+           </div>
+
+           <div class="Beverages">
+            <h1>Beverages</h1>
+            {%for item in data['Beverages'] %}
+            <div class="menu-item">
+                <h2>{{item['NAME']}}</h2>
+                <p>{{item['DESCRIPTION']}}</p>
+                <P>{{item['PRICE']}}</P>
+                <form action="{{ url_for('add_to_cart') }}" method="POST">
+                    <input type="hidden" name="item_id" value="{{item['ID']}}">
+                    <button type="submit">Add to cart</button>
+                </form>
+            </div>
+            {%endfor%}
+           </div>
+    </div>
+</body>
+</html>
