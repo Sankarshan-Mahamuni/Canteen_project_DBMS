@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% include 'navbar.html' %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canteen Menu</title>
@@ -53,9 +54,90 @@
         .menu-item button:hover {
             background: #0056b3;
         }
+
+        
+        .pop {
+            background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #00eaff; /* Bright blue border */
+            box-shadow: 0 0 30px rgba(0, 234, 255, 0.5), 
+                        0 0 50px rgba(0, 234, 255, 0.3); /* Double-layered blue glow */
+            text-align: center;
+            width: 25%;
+            height: auto;
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            margin-top: 2%;
+            animation: slideDown 0.5s ease-out;
+            font-family: "Cinzel", serif;
+        }
+        .pop ul.flash-messages {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pop ul.flash-messages li {
+            padding: 15px;
+            border-bottom: 1px solid #444;
+            color: #ffffff;
+            font-size: 18px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2), 
+                         0 0 10px rgba(0, 234, 255, 0.5);
+            animation: flicker 1.5s infinite;
+        }
+
+        .pop ul.flash-messages li:last-child {
+            border-bottom: none;
+        }
+
+        .pop .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #ffffff;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .pop .close:hover {
+            color: #00eaff;
+            transform: rotate(90deg) scale(1.2);
+        }
+
     </style>
 </head>
 <body>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="pop">
+        <ul class="flash-messages">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        <span class="close">&times;</span>
+      </div>
+    {% endif %}
+{% endwith %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const popup = document.querySelector(".pop");
+        const closeButton = popup.querySelector(".close");
+
+        closeButton.addEventListener("click", function() {
+            popup.style.display = "none";
+        });
+    });
+</script>
+
     <div class="container">
         <h1>Welcome to Our Canteen</h1>
         <div class="menu">
@@ -66,8 +148,13 @@
                     <h2>{{item['NAME']}}</h2>
                     <p>{{item['DESCRIPTION']}}</p>
                     <p>{{item['PRICE']}}</p>
-                    <form action="{{ url_for('add_to_cart') }}" method="POST">
-                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                    <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                        <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                        <div>
+                            <button type="button" onclick="decreaseQuantity(this)">-</button>
+                            <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                            <button type="button" onclick="increaseQuantity(this)">+</button>
+                        </div>
                         <button type="submit">Add to cart</button>
                     </form>
                 </div>
@@ -79,9 +166,14 @@
                 <div class="menu-item">
                     <h2>{{item['NAME']}}</h2>
                     <p>{{item['DESCRIPTION']}}</p>
-                    <P>{{item['PRICE']}}</P>
-                    <form action="{{ url_for('add_to_cart') }}" method="POST">
-                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                    <p>{{item['PRICE']}}</p>
+                    <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                        <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                        <div>
+                            <button type="button" onclick="decreaseQuantity(this)">-</button>
+                            <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                            <button type="button" onclick="increaseQuantity(this)">+</button>
+                        </div>
                         <button type="submit">Add to cart</button>
                     </form>
                 </div>
@@ -93,9 +185,14 @@
             <div class="menu-item">
                 <h2>{{item['NAME']}}</h2>
                 <p>{{item['DESCRIPTION']}}</p>
-                <P>{{item['PRICE']}}</P>
-                <form action="{{ url_for('add_to_cart') }}" method="POST">
-                    <input type="hidden" name="item_id" value="{{item['ID']}}">
+                <p>{{item['PRICE']}}</p>
+                <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                    <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                    <div>
+                        <button type="button" onclick="decreaseQuantity(this)">-</button>
+                        <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                        <button type="button" onclick="increaseQuantity(this)">+</button>
+                    </div>
                     <button type="submit">Add to cart</button>
                 </form>
             </div>
@@ -108,14 +205,40 @@
             <div class="menu-item">
                 <h2>{{item['NAME']}}</h2>
                 <p>{{item['DESCRIPTION']}}</p>
-                <P>{{item['PRICE']}}</P>
-                <form action="{{ url_for('add_to_cart') }}" method="POST">
-                    <input type="hidden" name="item_id" value="{{item['ID']}}">
+                <p>{{item['PRICE']}}</p>
+                <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                    <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                    <div>
+                        <button type="button" onclick="decreaseQuantity(this)">-</button>
+                        <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                        <button type="button" onclick="increaseQuantity(this)">+</button>
+                    </div>
                     <button type="submit">Add to cart</button>
                 </form>
             </div>
             {%endfor%}
            </div>
     </div>
+    <script>
+        function increaseQuantity(button) {
+            const quantityInput = button.previousElementSibling;
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decreaseQuantity(button) {
+            const quantityInput = button.nextElementSibling;
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+
+        // Debugging: Log form data before submission
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', event => {
+                const formData = new FormData(form);
+                console.log('Form Data:', Object.fromEntries(formData.entries()));
+            });
+        });
+    </script>
 </body>
 </html>

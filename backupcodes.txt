@@ -94,3 +94,85 @@ INSERT INTO PAYMENT (PAYMENT_ID, ORDER_ID, TRANSACTION_ID, PAYMENT_METHOD, AMOUN
 VALUES (5001, 1001, 'TXN123456789', 'Credit Card', 50.00, CURRENT_TIMESTAMP);
 
 
+select * from student;
+
+
+
+
+
+
+
+
+USE CANTEENAPP;
+SELECT * FROM MENU_ITEMS;
+
+INSERT INTO menu_items (ITEM_ID, NAME, PRICE, CATEGORY, DESCRIPTION, AVAILABILITY, PREPARATION_TIME, COUNTER_ID)
+VALUES 
+(102, 'Cheese Burger', 70.00, 'Fast Food', 'Cheesy and tasty', TRUE, 12, 1),
+(103, 'French Fries', 40.00, 'Fast Food', 'Crispy and golden fries', TRUE, 8, 1),
+(104, 'Paneer Wrap', 80.00, 'Fast Food', 'Stuffed paneer wrap', TRUE, 15, 1),
+(105, 'Chicken Burger', 90.00, 'Fast Food', 'Crispy chicken burger', TRUE, 12, 1),
+(106, 'Veg Pizza', 120.00, 'Fast Food', 'Classic cheese veg pizza', TRUE, 20, 1),
+(107, 'Chicken Pizza', 150.00, 'Fast Food', 'Loaded with chicken toppings', TRUE, 20, 1),
+(108, 'Veg Sandwich', 50.00, 'Fast Food', 'Healthy veg sandwich', TRUE, 10, 1),
+(109, 'Grilled Cheese Sandwich', 60.00, 'Fast Food', 'Crispy grilled sandwich', TRUE, 12, 1),
+(110, 'Momos', 70.00, 'Fast Food', 'Steamed dumplings', TRUE, 15, 1);
+
+update counter
+set name ="Counter A" ,location="Building 6"
+where counter_id=1;
+
+select * from counter;
+insert into counter(counter_id,name,location)
+values
+(2,'Counter B','Building 6'),
+(3,'Counter c','Building 6')
+;
+
+
+INSERT INTO menu_items (ITEM_ID, NAME, PRICE, CATEGORY, DESCRIPTION, AVAILABILITY, PREPARATION_TIME, COUNTER_ID)
+VALUES 
+(201, 'Poha', 30.00, 'Nasta', 'Light and tasty poha', TRUE, 7, 2),
+(202, 'Upma', 35.00, 'Nasta', 'Healthy and delicious upma', TRUE, 8, 2),
+(203, 'Samosa', 20.00, 'Nasta', 'Crispy and spicy samosa', TRUE, 5, 2),
+(204, 'Kachori', 25.00, 'Nasta', 'Famous kachori with chutney', TRUE, 6, 2),
+(205, 'Vada Pav', 25.00, 'Nasta', 'Mumbai style vada pav', TRUE, 8, 2),
+(206, 'Misal Pav', 60.00, 'Nasta', 'Spicy Maharashtrian misal', TRUE, 12, 2),
+(207, 'Dhokla', 40.00, 'Nasta', 'Soft and fluffy dhokla', TRUE, 10, 2),
+(208, 'Aloo Paratha', 50.00, 'Nasta', 'Stuffed potato paratha', TRUE, 15, 2),
+(209, 'Onion Pakora', 30.00, 'Nasta', 'Crispy onion fritters', TRUE, 8, 2),
+(210, 'Bhel Puri', 45.00, 'Nasta', 'Tangy and spicy bhel puri', TRUE, 7, 2);
+
+
+INSERT INTO menu_items (ITEM_ID, NAME, PRICE, CATEGORY, DESCRIPTION, AVAILABILITY, PREPARATION_TIME, COUNTER_ID)
+VALUES 
+(301, 'Veg Thali', 75.00, 'Lunch', 'Complete meal with roti and sabzi', TRUE, 10, 3),
+(302, 'Dal Rice', 40.00, 'Lunch', 'Simple dal with steamed rice', TRUE, 10, 3),
+(303, 'Chole Bhature', 80.00, 'Lunch', 'Spicy chole with bhature', TRUE, 18, 3),
+(304, 'Shejwan Rice', 50.00, 'Lunch', 'Punjabi style rajma with rice', TRUE, 18, 3),
+(305, 'Jeera Rice', 50.00, 'Lunch', 'Fragrant cumin rice', TRUE, 12, 3),
+(306, 'Chapati with Sabzi', 40.00, 'Lunch', 'Simple and nutritious meal', TRUE, 10, 3);
+
+
+INSERT INTO menu_items (ITEM_ID, NAME, PRICE, CATEGORY, DESCRIPTION, AVAILABILITY, PREPARATION_TIME, COUNTER_ID)
+VALUES 
+(501, 'Tea', 15.00, 'Beverages', 'Masala tea', TRUE, 5, 1),
+(502, 'Coffee', 20.00, 'Beverages', 'Hot coffee', TRUE, 5, 1),
+(503, 'Cold Coffee', 50.00, 'Beverages', 'Chilled cold coffee', TRUE, 7, 1),
+(504, 'Lassi', 40.00, 'Beverages', 'Sweet Punjabi lassi', TRUE, 7, 1),
+(505, 'Mango Shake', 60.00, 'Beverages', 'Refreshing mango shake', TRUE, 8, 1),
+(506, 'Strawberry Shake', 60.00, 'Beverages', 'Delicious strawberry shake', TRUE, 8, 1),
+(507, 'Orange Juice', 50.00, 'Beverages', 'Fresh orange juice', TRUE, 7, 1),
+(508, 'Lemonade', 30.00, 'Beverages', 'Refreshing lemonade', TRUE, 5, 1),
+(509, 'Buttermilk', 25.00, 'Beverages', 'Cooling buttermilk', TRUE, 6, 1),
+(510, 'Hot Chocolate', 80.00, 'Beverages', 'Rich and creamy hot chocolate', TRUE, 8, 1);
+
+select * from student;
+alter table student add column password varchar(10) default "12345";
+select * from student;
+
+select * from order_items;
+select * from order_table;
+
+
+
