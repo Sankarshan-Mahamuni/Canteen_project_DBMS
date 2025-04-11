@@ -1,0 +1,152 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .date-time {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Canteen</h1>
+        <p class="date-time">
+            Today's Date: {{ today_date }} | Current Time: {{ current_time }}
+        </p>
+
+        <h3 class="section-title">Today's Ongoing Orders</h3>
+        <table id="ongoingOrdersTable">
+            <thead>
+                <tr>
+                    <th>PRN</th>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Payment Status</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in ongoing_orders %}
+                    <tr>
+                        <td>{{ order.PRN }}</td>
+                        <td>{{ order.ORDER_ID}}</td>
+                        <td>{{ order.ITEMS_ID }}</td>
+                        <td>{{ order.TOTAL_AMT}}</td>
+                        <td>{{ order.PAYMENT_STATUS}}</td>
+                        <td>{{ order.STATUS}}</td>
+                        <td>
+                            <!-- Dropdown for manual order status update -->
+                            <select class="order-status-select" data-orderid="{{ order.orderid }}">
+                                <option value="pending" {% if order.orderstatus == 'pending' %} selected {% endif %}>Pending</option>
+                                <option value="completed" {% if order.orderstatus == 'completed' %} selected {% endif %}>Completed</option>
+                            </select>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="section-title">Completed Orders</h3>
+        <table id="completedOrdersTable">
+            <thead>
+                <tr>
+                    <th>PRN</th>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Payment Status</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in completed_orders %}
+                    <tr>
+                        <td>{{ order.PRN }}</td>
+                        <td>{{ order.ORDER_ID }}</td>
+                        <td>{{ order.ITEMS_ID }}</td>
+                        <td>{{ order.TOTAL_AMT}}</td>
+                        <td>{{ order.PAYMENT_STATUS}}</td>
+                        <td>{{ order.STATUS }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // JavaScript to handle order status update
+        document.addEventListener('DOMContentLoaded', function() {
+            const selects = document.querySelectorAll('.order-status-select');
+            
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const orderid = this.getAttribute('data-orderid');
+                    const newStatus = this.value;
+
+                    // Send POST request to update the order status
+                    fetch('/update_order_status', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `orderid=${orderid}&orderstatus=${newStatus}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Order status updated successfully!');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

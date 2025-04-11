@@ -69,7 +69,6 @@
                     <th>Total</th>
                     <th>Payment Status</th>
                     <th>Order Status</th>
-                    <th>Update Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,7 +79,6 @@
                         <td>{{ order.ITEMS_ID }}</td>
                         <td>{{ order.TOTAL_AMT}}</td>
                         <td>{{ order.PAYMENT_STATUS}}</td>
-                        <td>{{ order.STATUS}}</td>
                         <td>
                             <!-- Dropdown for manual order status update -->
                             <select class="order-status-select" data-orderid="{{ order.orderid }}">
@@ -116,6 +114,22 @@
                         <td>{{ order.STATUS }}</td>
                     </tr>
                 {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="section-title">Canteen Summary</h3>
+            <table id="summaryTable">
+            <thead>
+                <tr>
+                    <th>Total Orders</th>
+                    <th>Total Revenue (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>{{ total_orders }}</td>
+                <td>{{ total_revenue }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

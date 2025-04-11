@@ -226,7 +226,7 @@ def canteen():
 def fetch_ongoing_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 'pending' OR status = 'pending'")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 0 OR status = 0")
     result = cursor.fetchall()
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
@@ -238,7 +238,7 @@ def fetch_ongoing_orders():
 def fetch_completed_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 'completed' AND status = 'completed'")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 1 AND status = 1")
     result = cursor.fetchall()
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
