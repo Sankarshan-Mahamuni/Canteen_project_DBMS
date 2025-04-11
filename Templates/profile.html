@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ session['name'] }}</h1>
+    <h2>Wallet Balance</h2>
+    <p>₹{{ wallet_balance['WALLET_BALANCE'] }}</p>
+
+    <h2>Order History</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Sub Total</th>
+                <th>Total Amount</th>
+                <th>Payment Status</th>
+                <th>Order Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_history %}
+            <tr>
+                <td>{{ order.ORDER_ID }}</td>
+                <td>{{ order.ITEM_NAME }}</td>
+                <td>{{ order.QUANTITY }}</td>
+                <td>₹{{ order.SUB_TOTAL }}</td>
+                <td>₹{{ order.TOTAL_AMOUNT }}</td>
+                <td>{{ 'Completed' if order.PAYMENT_STATUS else 'Pending' }}</td>
+                <td>{{ 'Completed' if order.STATUS else 'Pending' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

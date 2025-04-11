@@ -1,0 +1,55 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1, h2 {
+    color: #444;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Wallet balance styles */
+p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #28a745;
+}

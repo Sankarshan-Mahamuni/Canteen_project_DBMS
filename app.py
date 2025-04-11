@@ -222,6 +222,32 @@ def canteen():
                            ongoing_orders=ongoing_orders,
                            completed_orders=completed_orders)
 
+@app.route('/profile')
+def profile():
+    prn = session.get('PRN')
+    if not prn:
+        return redirect(url_for('login'))
+
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+
+    # Fetch wallet balance
+    cur.execute("SELECT WALLET_BALANCE FROM STUDENT WHERE PRN = %s", (prn,))
+    wallet_balance = cur.fetchone()
+
+    # Fetch order history
+    cur.execute("""
+        SELECT OT.ORDER_ID, OT.TOTAL_AMOUNT, OT.PAYMENT_STATUS, OT.STATUS, OI.ITEM_ID, OI.QUANTITY, OI.SUB_TOTAL, M.NAME AS ITEM_NAME
+        FROM ORDER_TABLE OT
+        INNER JOIN ORDER_ITEMS OI ON OT.ORDER_ID = OI.ORDER_ID
+        INNER JOIN MENU_ITEMS M ON OI.ITEM_ID = M.ITEM_ID
+        WHERE OT.PRN = %s
+        ORDER BY OT.ORDER_ID DESC
+    """, (prn,))
+    order_history = cur.fetchall()
+
+    return render_template('profile.html', wallet_balance=wallet_balance, order_history=order_history)
+
 # Function to fetch ongoing orders (from MySQL to DataFrame to Dictionary)
 def fetch_ongoing_orders():
     connection = get_db()

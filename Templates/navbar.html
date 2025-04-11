@@ -1,6 +1,7 @@
 <!-- templates/navbar.html -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url_for('home') }}">MyApp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -17,6 +18,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('canteen') }}">canteen</a>
                 </li>
             </ul>
         </div>
