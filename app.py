@@ -155,29 +155,55 @@ def confirm_order():
     return render_template('success.html', message="Order confirmed and payment processed successfully!")
 
 #updating ongoning orders to completed orders by changing the status pending to completed
+# @app.route('/update_order_status', methods=['POST'])
+# def update_order_status():
+#     order_id = request.form['order_id']
+#     new_status = request.form['status']
+
+#     db = get_db()
+#     cursor = db.cursor()
+
+#     if new_status == 'completed':
+#         cursor.execute("""
+#             UPDATE order_table
+#             SET STATUS = 1, PAYMENT_STATUS = 1
+#             WHERE ORDER_ID = %s
+#         """, (order_id,))
+#     else:
+#         cursor.execute("""
+#             UPDATE order_table
+#             SET STATUS = 0
+#             WHERE ORDER_ID = %s
+#         """, (order_id,))
+
+#     db.commit()
+#     return jsonify({'message': 'Order status updated successfully'})
+
+# from flask import request, redirect, url_for
+# from db import get_db  # if you're using a get_db() function
+
 @app.route('/update_order_status', methods=['POST'])
 def update_order_status():
+    db = get_db()
+    cur = db.cursor(dictionary=True)
+
     order_id = request.form['order_id']
     new_status = request.form['status']
 
-    db = get_db()
-    cursor = db.cursor()
+    # Convert status to boolean/integer
+    status_flag = 1 if new_status == 'completed' else 0
 
-    if new_status == 'completed':
-        cursor.execute("""
-            UPDATE order_table
-            SET STATUS = 1, PAYMENT_STATUS = 1
-            WHERE ORDER_ID = %s
-        """, (order_id,))
-    else:
-        cursor.execute("""
-            UPDATE order_table
-            SET STATUS = 0
-            WHERE ORDER_ID = %s
-        """, (order_id,))
+    # Update the order in the database
+    cur.execute("""
+        UPDATE ORDER_TABLE
+        SET STATUS = %s, PAYMENT_STATUS = %s
+        WHERE ORDER_ID = %s
+    """, (status_flag, status_flag, order_id))
 
     db.commit()
-    return jsonify({'message': 'Order status updated successfully'})
+    cur.close()
+
+    return redirect(url_for('canteen'))  # Change to your actual dashboard route
 
 
 @app.route('/')
