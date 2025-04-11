@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIEW CART</title>
+    <link rel ="stylesheet" href="{{url_for('static', filename='view_cart.css')}}">
 </head>
 <body>
-    {% for item in items %}
-    <div class="item">
-        <h2>{{ item.name }}</h2>
-        <p>Quantity: {{ item.quantity }}</p>
-        <p>Price: {{ item.total }}</p>
-        <br>
-    {% endfor %}
-    <button type="submit">Confirm Order </button>
-    
-    
+    {% if items %}
+        {% for item in items %}
+        <div class="item">
+            <h2>{{ item.NAME }}</h2>
+            <p>Quantity: {{ item.QUANTITY }}</p>
+            <p>Price: {{ item.TOTAL }}</p>
+            <br>
+        </div>
+        {% endfor %}
+        <form method="POST" action="/confirm_order">
+            <input type="hidden" name="prn" value="{{ session['PRN'] }}">
+            <button type="submit">Confirm Order</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
 </body>
 </html>

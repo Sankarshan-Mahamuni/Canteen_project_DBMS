@@ -1,0 +1,203 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f7f2;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    overflow: hidden;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    font-size: 2.5rem;
+    position: relative;
+    padding-bottom: 0.7rem;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #e74c3c;
+}
+
+/* Category Heading */
+.menu div > h1 {
+    width: 100%;
+    text-align: left;
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
+    padding-left: 0.5rem;
+    border-left: 5px solid #e74c3c;
+    color: #2c3e50;
+}
+
+/* Menu Layout */
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+
+.Fast-Food, .Nasta, .Lunch, .Beverages {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Menu Item Styling */
+.menu-item {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: calc(33.333% - 1rem);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item h2 {
+    margin: 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.4rem;
+}
+
+.menu-item p {
+    color: #555;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.menu-item p:nth-of-type(2) {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0.5rem 0 1rem;
+}
+
+/* Form Controls */
+.menu-item form {
+    margin-top: auto;
+}
+
+.menu-item form div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.menu-item button {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.menu-item button[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #e74c3c;
+}
+
+.menu-item button:hover {
+    background: #c0392b;
+}
+
+/* Quantity Controls */
+.menu-item button[onclick] {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    padding: 0;
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.menu-item button[onclick]:hover {
+    background: #e74c3c;
+    color: white;
+    border-color: #e74c3c;
+}
+
+.menu-item input[type="number"] {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.4rem;
+    width: 60px;
+    text-align: center;
+    margin: 0 0.5rem;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .menu-item {
+        width: calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+   
+    h1 {
+        font-size: 2rem;
+    }
+   
+    .menu div > h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .menu-item {
+        width: 100%;
+    }
+   
+    h1 {
+        font-size: 1.8rem;
+    }
+}

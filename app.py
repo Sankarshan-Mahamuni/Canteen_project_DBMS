@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, jsonify,session,flash
 from database import get_db
 import pandas as pd
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -98,16 +99,25 @@ def add_to_cart():
 
 @app.route('/view_cart')
 def view_cart():
-    db=get_db()
-    df= pd.read_sql_query(f"""
-                        SELECT M.NAME,SUM(O.QUANTITY) AS QUANTITY,SUM(O.SUB_TOTAL) AS TOTAL
-                        FROM MENU_ITEMS M INNER JOIN order_items O ON M.ITEM_ID=O.ITEM_ID
-                         GROUP BY O.ITEM_ID;"""
-                        ,db)
-    tasks=df.to_dict(orient="index")
-    return render_template("view_cart.html",items=tasks)
+    prn = session.get('PRN')
+    if not prn:
+        return redirect(url_for('login'))
 
+    db = get_db()
+    cur = db.cursor(dictionary=True)
 
+    # Fetch cart items for the logged-in user
+    cur.execute(f"""
+        SELECT M.NAME, SUM(O.QUANTITY) AS QUANTITY, SUM(O.SUB_TOTAL) AS TOTAL
+        FROM MENU_ITEMS M
+        INNER JOIN ORDER_ITEMS O ON M.ITEM_ID = O.ITEM_ID
+        INNER JOIN ORDER_TABLE OT ON O.ORDER_ID = OT.ORDER_ID
+        WHERE OT.PRN = %s AND OT.STATUS = FALSE
+        GROUP BY O.ITEM_ID;
+    """, (prn,))
+
+    items = cur.fetchall()
+    return render_template("view_cart.html", items=items)
 
 @app.route('/confirm_order', methods=['POST'])
 def confirm_order():
@@ -194,6 +204,47 @@ def login():
             session['name'] = user[1]
             return redirect(url_for('home'))
     return render_template('login.html')
+
+@app.route('/canteen')
+def canteen():
+    today_date = datetime.now().strftime('%Y-%m-%d')
+    current_time = datetime.now().strftime('%H:%M:%S')
+
+    ongoing_orders = fetch_ongoing_orders()
+    completed_orders = fetch_completed_orders()
+
+    print(ongoing_orders)   #Debug: Log the fetched orders
+    print(completed_orders)  # Debug: Log the fetched orders
+    
+    return render_template('canteen.html', 
+                           today_date=today_date, 
+                           current_time=current_time,
+                           ongoing_orders=ongoing_orders,
+                           completed_orders=completed_orders)
+
+# Function to fetch ongoing orders (from MySQL to DataFrame to Dictionary)
+def fetch_ongoing_orders():
+    connection = get_db()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 'pending' OR status = 'pending'")
+    result = cursor.fetchall()
+    df = pd.DataFrame(result)
+    orders_dict = df.to_dict(orient='records')
+    cursor.close()
+    connection.close()
+    return orders_dict
+
+# Fetch completed orders
+def fetch_completed_orders():
+    connection = get_db()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 'completed' AND status = 'completed'")
+    result = cursor.fetchall()
+    df = pd.DataFrame(result)
+    orders_dict = df.to_dict(orient='records')
+    cursor.close()
+    connection.close()
+    return orders_dict
 
 
 if __name__ == "__main__":
