@@ -4,8 +4,8 @@ def get_db():
         connection = mysql.connector.connect(
             host="localhost",
             username="root",
-            password="@Rohit9130",
-            database="canteenapp"
+            password="SANKARSHAN@SQL",
+            database="CANTEEN_APP"
         )
         return connection
     except Exception as e:

@@ -305,8 +305,8 @@ def fetch_ongoing_orders():
     result = cursor.fetchall()
 
     for order in result:
-        prn = order['PRN']
-        order['items_list'] = get_order_items_by_prn(prn)  # Add item names for each order
+        order_id = order['ORDER_ID']
+        order['items_list'] = get_order_items_by_order_id(order_id)  # Fetch items for the specific order
 
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
@@ -323,8 +323,8 @@ def fetch_completed_orders():
     result = cursor.fetchall()
 
     for order in result:
-        prn = order['PRN']
-        order['items_list'] = get_order_items_by_prn(prn)  # Add item names for each order
+        order_id = order['ORDER_ID']
+        order['items_list'] = get_order_items_by_order_id(order_id)  # Fetch items for the specific order
 
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
@@ -333,24 +333,23 @@ def fetch_completed_orders():
     return orders_dict
 
 
-def get_order_items_by_prn(prn):
+def get_order_items_by_order_id(order_id):
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
     query = """
         SELECT m.name
         FROM menu_items m
         INNER JOIN order_items o ON m.item_id = o.item_id
-        INNER JOIN order_table ot ON o.order_id = ot.order_id
-        WHERE ot.prn = %s;
+        WHERE o.order_id = %s;
     """
 
     # Execute the query
-    cursor.execute(query, (prn,))
+    cursor.execute(query, (order_id,))
 
     # Fetch all the results
     result = cursor.fetchall()
 
- # Convert the result to a list of item names
+    # Convert the result to a list of item names
     item_names = [row['name'] for row in result]
 
     cursor.close()
