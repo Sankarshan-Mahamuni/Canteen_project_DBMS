@@ -308,25 +308,63 @@ def profile():
 def fetch_ongoing_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 0 OR status = 0 ")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 0 OR status = 0")
     result = cursor.fetchall()
+
+    for order in result:
+        prn = order['PRN']
+        order['items_list'] = get_order_items_by_prn(prn)  # Add item names for each order
+
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
     cursor.close()
     connection.close()
     return orders_dict
 
+
 # Fetch completed orders
 def fetch_completed_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 1 AND status = 1 ")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 1 AND status = 1")
     result = cursor.fetchall()
+
+    for order in result:
+        prn = order['PRN']
+        order['items_list'] = get_order_items_by_prn(prn)  # Add item names for each order
+
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
     cursor.close()
     connection.close()
     return orders_dict
+
+
+def get_order_items_by_prn(prn):
+    connection = get_db()
+    cursor = connection.cursor(dictionary=True)
+    query = """
+        SELECT m.name
+        FROM menu_items m
+        INNER JOIN order_items o ON m.item_id = o.item_id
+        INNER JOIN order_table ot ON o.order_id = ot.order_id
+        WHERE ot.prn = %s;
+    """
+
+    # Execute the query
+    cursor.execute(query, (prn,))
+
+    # Fetch all the results
+    result = cursor.fetchall()
+
+ # Convert the result to a list of item names
+    item_names = [row['name'] for row in result]
+
+    cursor.close()
+    connection.close()
+
+    return item_names
+
 
 if __name__ == "__main__":
     app.run(debug=True)

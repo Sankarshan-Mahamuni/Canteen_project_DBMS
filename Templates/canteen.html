@@ -76,7 +76,11 @@
                     <tr>
                         <td>{{ order.PRN }}</td>
                         <td>{{ order.ORDER_ID}}</td>
-                        <td>{{ order.ITEMS_ID }}</td>
+                        <td>
+                            {% for item in order.items_list %}
+                                {{ item }}<br>
+                            {% endfor %}
+                        </td>                        
                         <td>{{ order.TOTAL_AMOUNT}}</td>
                         <td>{{ order.PAYMENT_STATUS}}</td>
                         <td>
@@ -111,7 +115,11 @@
                     <tr>
                         <td>{{ order.PRN }}</td>
                         <td>{{ order.ORDER_ID }}</td>
-                        <td>{{ order.ITEMS_ID }}</td>
+                        <td>
+                            {% for item in order.items_list %}
+                                {{ item }}<br>
+                            {% endfor %}
+                        </td>                     
                         <td>{{ order.TOTAL_AMOUNT}}</td>
                         <td>{{ order.PAYMENT_STATUS}}</td>
                         <td>{{ order.STATUS }}</td>
