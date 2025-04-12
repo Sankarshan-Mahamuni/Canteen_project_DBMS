@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, jsonify,session,flash
+from flask import Flask, render_template, request, url_for, redirect, jsonify,session,flash 
 from database import get_db
 import pandas as pd
 from datetime import datetime
@@ -154,22 +154,57 @@ def confirm_order():
     db.commit()
     return render_template('success.html', message="Order confirmed and payment processed successfully!")
 
+#updating ongoning orders to completed orders by changing the status pending to completed
+# @app.route('/update_order_status', methods=['POST'])
+# def update_order_status():
+#     order_id = request.form['order_id']
+#     new_status = request.form['status']
+
+#     db = get_db()
+#     cursor = db.cursor()
+
+#     if new_status == 'completed':
+#         cursor.execute("""
+#             UPDATE order_table
+#             SET STATUS = 1, PAYMENT_STATUS = 1
+#             WHERE ORDER_ID = %s
+#         """, (order_id,))
+#     else:
+#         cursor.execute("""
+#             UPDATE order_table
+#             SET STATUS = 0
+#             WHERE ORDER_ID = %s
+#         """, (order_id,))
+
+#     db.commit()
+#     return jsonify({'message': 'Order status updated successfully'})
+
+# from flask import request, redirect, url_for
+# from db import get_db  # if you're using a get_db() function
+
 @app.route('/update_order_status', methods=['POST'])
 def update_order_status():
-    order_id = request.form['order_id']
-    status = request.form['status']  # TRUE for completed, FALSE for pending
-
     db = get_db()
-    cur = db.cursor()
+    cur = db.cursor(dictionary=True)
 
+    order_id = request.form['order_id']
+    new_status = request.form['status']
+
+    # Convert status to boolean/integer
+    status_flag = 1 if new_status == 'completed' else 0
+
+    # Update the order in the database
     cur.execute("""
         UPDATE ORDER_TABLE
-        SET STATUS = %s
+        SET STATUS = %s, PAYMENT_STATUS = %s
         WHERE ORDER_ID = %s
-    """, (status, order_id))
+    """, (status_flag, status_flag, order_id))
 
     db.commit()
-    return jsonify({"message": "Order status updated"})
+    cur.close()
+
+    return redirect(url_for('canteen'))  # Change to your actual dashboard route
+
 
 @app.route('/')
 def home():
@@ -206,6 +241,22 @@ def login():
     return render_template('login.html')
 
 @app.route('/canteen')
+# def canteen():
+#     today_date = datetime.now().strftime('%Y-%m-%d')
+#     current_time = datetime.now().strftime('%H:%M:%S')
+
+#     ongoing_orders = fetch_ongoing_orders()
+#     completed_orders = fetch_completed_orders()
+
+#     print(ongoing_orders)   #Debug: Log the fetched orders
+#     print(completed_orders)  # Debug: Log the fetched orders
+    
+#     return render_template('canteen.html', 
+#                            today_date=today_date, 
+#                            current_time=current_time,
+#                            ongoing_orders=ongoing_orders,
+#                            completed_orders=completed_orders)
+
 def canteen():
     today_date = datetime.now().strftime('%Y-%m-%d')
     current_time = datetime.now().strftime('%H:%M:%S')
@@ -213,14 +264,18 @@ def canteen():
     ongoing_orders = fetch_ongoing_orders()
     completed_orders = fetch_completed_orders()
 
-    print(ongoing_orders)   #Debug: Log the fetched orders
-    print(completed_orders)  # Debug: Log the fetched orders
-    
+    all_orders = ongoing_orders + completed_orders
+    total_orders = len(all_orders)
+    total_revenue = sum(order['TOTAL_AMOUNT'] for order in all_orders)
+
     return render_template('canteen.html', 
                            today_date=today_date, 
                            current_time=current_time,
                            ongoing_orders=ongoing_orders,
-                           completed_orders=completed_orders)
+                           completed_orders=completed_orders,
+                           total_orders=total_orders,
+                           total_revenue=total_revenue)
+
 
 @app.route('/profile')
 def profile():
@@ -252,7 +307,7 @@ def profile():
 def fetch_ongoing_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 'pending' OR status = 'pending'")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 0 OR status = 0 ")
     result = cursor.fetchall()
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
@@ -264,14 +319,13 @@ def fetch_ongoing_orders():
 def fetch_completed_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 'completed' AND status = 'completed'")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 1 AND status = 1 ")
     result = cursor.fetchall()
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
     cursor.close()
     connection.close()
     return orders_dict
-
 
 if __name__ == "__main__":
     app.run(debug=True)

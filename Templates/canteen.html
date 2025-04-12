@@ -69,7 +69,6 @@
                     <th>Total</th>
                     <th>Payment Status</th>
                     <th>Order Status</th>
-                    <th>Update Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,13 +79,15 @@
                         <td>{{ order.ITEMS_ID }}</td>
                         <td>{{ order.TOTAL_AMT}}</td>
                         <td>{{ order.PAYMENT_STATUS}}</td>
-                        <td>{{ order.STATUS}}</td>
                         <td>
-                            <!-- Dropdown for manual order status update -->
-                            <select class="order-status-select" data-orderid="{{ order.orderid }}">
-                                <option value="pending" {% if order.orderstatus == 'pending' %} selected {% endif %}>Pending</option>
-                                <option value="completed" {% if order.orderstatus == 'completed' %} selected {% endif %}>Completed</option>
-                            </select>
+                            <form method="POST" action="/update_order_status">
+                                <input type="hidden" name="order_id" value="{{ order.ORDER_ID }}">
+                                <select name="status">
+                                    <option value="pending" {% if order.STATUS == 0 %} selected {% endif %}>Pending</option>
+                                    <option value="completed" {% if order.STATUS == 1 %} selected {% endif %}>Completed</option>
+                                </select>
+                                <button type="submit">Update</button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
@@ -116,6 +117,22 @@
                         <td>{{ order.STATUS }}</td>
                     </tr>
                 {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="section-title">Canteen Summary</h3>
+        <table id="summaryTable">
+            <thead>
+                <tr>
+                    <th>Total Orders</th>
+                    <th>Total Revenue (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ total_orders }}</td>
+                    <td>{{ total_revenue }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
