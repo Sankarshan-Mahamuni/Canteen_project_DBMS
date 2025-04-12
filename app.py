@@ -212,7 +212,6 @@ def home():
     cur = conn.cursor(dictionary=True)
     cur.execute("SELECT * FROM menu_items")
     data = cur.fetchall()
-    print(data)  # Debug: Log the data being passed to the template
     categories = {"Fast Food": [],
                   "Nasta": [],
                   "Lunch": [],
@@ -263,6 +262,8 @@ def canteen():
 
     ongoing_orders = fetch_ongoing_orders()
     completed_orders = fetch_completed_orders()
+    print(ongoing_orders)   #Debug: Log the fetched orders
+    print(completed_orders) # Debug: Log the fetched orders
 
     all_orders = ongoing_orders + completed_orders
     total_orders = len(all_orders)
