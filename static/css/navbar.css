@@ -1,23 +1,42 @@
 /* General navbar styling */
 .navbar {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(90deg, #4e54c8, #8f94fb); /* Gradient background for a modern look */
+    background: linear-gradient(90deg, #4e54c8, #8f94fb); /* Gradient background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the navbar horizontally */
 }
 
+/* Navbar brand styling */
 .navbar-brand {
     font-size: 1.8rem;
     font-weight: 600;
     color: #ffffff !important; /* White text for contrast */
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-decoration: none;
+    margin-right: auto; /* Push the brand to the left */
+}
+
+/* Navbar navigation styling */
+.navbar-nav {
+    display: flex; /* Align items horizontally */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center; /* Center the nav items */
+}
+
+.navbar-nav .nav-item {
+    margin: 0 1rem; /* Spacing between nav items */
 }
 
 .navbar-nav .nav-link {
     font-size: 1rem;
     color: #e0e0e0 !important; /* Light gray for readability */
-    margin: 0 0.5rem;
+    text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 25px;
     transition: all 0.3s ease-in-out;
@@ -29,34 +48,39 @@
     transform: scale(1.05); /* Slight zoom effect */
 }
 
+/* Navbar toggler for responsiveness */
 .navbar-toggler {
     border: none;
     outline: none;
+    background-color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .navbar-toggler-icon {
-    background-color: #ffffff; /* White for visibility */
-    border-radius: 2px;
+    background-color: #ffffff;
     width: 30px;
     height: 3px;
     display: block;
-    margin: 6px auto;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.navbar-toggler-icon:hover {
-    background-color: #ffcc00; /* Highlight on hover */
-    transform: rotate(90deg); /* Rotate effect on hover */
+    margin: 5px auto;
+    border-radius: 2px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: center;
+    }
+
     .navbar-nav {
-        text-align: center;
+        flex-direction: column; /* Stack nav items vertically */
+        width: 100%;
         margin-top: 1rem;
     }
 
-    .navbar-nav .nav-link {
+    .navbar-nav .nav-item {
         margin: 0.5rem 0;
     }
 }

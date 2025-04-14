@@ -35,85 +35,96 @@
 </script>
 
     <div class="container">
-        <h1>Welcome to Our Canteen</h1>
+        <h1 style="color: #0099ff;">Welcome to Our Canteen</h1>
+        
         <div class="menu">
-            <div class="Fast-Food">
-                <h1>Fast Food</h1>
-                {% for item in data['Fast Food'] %}
-                <div class="menu-item">
-                    <h2>{{item['NAME']}}</h2>
-                    <p>{{item['DESCRIPTION']}}</p>
-                    <p>{{item['PRICE']}}</p>
-                    <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
-                        <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
-                        <div>
-                            <button type="button" onclick="decreaseQuantity(this)">-</button>
-                            <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
-                            <button type="button" onclick="increaseQuantity(this)">+</button>
-                        </div>
-                        <button type="submit">Add to cart</button>
-                    </form>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="Nasta">
-                <h1>Nasta</h1>
-                {%for item in data['Nasta'] %}
-                <div class="menu-item">
-                    <h2>{{item['NAME']}}</h2>
-                    <p>{{item['DESCRIPTION']}}</p>
-                    <p>{{item['PRICE']}}</p>
-                    <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
-                        <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
-                        <div>
-                            <button type="button" onclick="decreaseQuantity(this)">-</button>
-                            <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
-                            <button type="button" onclick="increaseQuantity(this)">+</button>
-                        </div>
-                        <button type="submit">Add to cart</button>
-                    </form>
-                </div>
-                {%endfor%}
-            </div>
-           <div class="Lunch">
-            <h1>Lunch</h1>
-            {%for item in data['Lunch'] %}
-            <div class="menu-item">
-                <h2>{{item['NAME']}}</h2>
-                <p>{{item['DESCRIPTION']}}</p>
-                <p>{{item['PRICE']}}</p>
-                <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
-                    <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
-                    <div>
-                        <button type="button" onclick="decreaseQuantity(this)">-</button>
-                        <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
-                        <button type="button" onclick="increaseQuantity(this)">+</button>
+            <div class="container-1">
+                <div class="Fast-Food">
+                    <h1>Fast Food</h1>
+                    <!-- <img src="{{ url_for('static', filename='Images/Home.jpg') }}" alt="Burger"> -->
+                    {% for item in data['Fast Food'] %}
+                    <div class="menu-item">
+                        <h2>{{item['NAME']}}</h2>
+                        <p>{{item['DESCRIPTION']}}</p>
+                        <p>{{item['PRICE']}}</p>
+                        <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                            <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                            <div>
+                                <button type="button" onclick="decreaseQuantity(this)">-</button>
+                                <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                                <button type="button" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button type="submit">Add to cart</button>
+                        </form>
                     </div>
-                    <button type="submit">Add to cart</button>
-                </form>
+                    {% endfor %}
+                </div>
             </div>
-            {%endfor%}
-           </div>
-
-           <div class="Beverages">
-            <h1>Beverages</h1>
-            {%for item in data['Beverages'] %}
-            <div class="menu-item">
-                <h2>{{item['NAME']}}</h2>
-                <p>{{item['DESCRIPTION']}}</p>
-                <p>{{item['PRICE']}}</p>
-                <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
-                    <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
-                    <div>
-                        <button type="button" onclick="decreaseQuantity(this)">-</button>
-                        <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
-                        <button type="button" onclick="increaseQuantity(this)">+</button>
+            <div class="container-1"> 
+                <div class="Nasta">
+                    <h1>Nasta</h1>
+                    {%for item in data['Nasta'] %}
+                    <div class="menu-item">
+                        <h2>{{item['NAME']}}</h2>
+                        <p>{{item['DESCRIPTION']}}</p>
+                        <p>{{item['PRICE']}}</p>
+                        <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                            <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                            <div>
+                                <button type="button" onclick="decreaseQuantity(this)">-</button>
+                                <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                                <button type="button" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button type="submit">Add to cart</button>
+                        </form>
                     </div>
-                    <button type="submit">Add to cart</button>
-                </form>
+                    {%endfor%}
+                </div>
             </div>
-            {%endfor%}
-           </div>
+            <div class="container-1">
+                <div class="Lunch">
+                    <h1>Lunch</h1>
+                    {%for item in data['Lunch'] %}
+                    <div class="menu-item">
+                        <h2>{{item['NAME']}}</h2>
+                        <p>{{item['DESCRIPTION']}}</p>
+                        <p>{{item['PRICE']}}</p>
+                        <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                            <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                            <div>
+                                <button type="button" onclick="decreaseQuantity(this)">-</button>
+                                <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                                <button type="button" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button type="submit">Add to cart</button>
+                        </form>
+                    </div>
+                    {%endfor%}
+                   </div>
+            </div>
+           
+            <div class="container-1">
+                <div class="Beverages">
+                    <h1>Beverages</h1>
+                    {%for item in data['Beverages'] %}
+                    <div class="menu-item">
+                        <h2>{{item['NAME']}}</h2>
+                        <p>{{item['DESCRIPTION']}}</p>
+                        <p>{{item['PRICE']}}</p>
+                        <form id="item-form-{{ item['ITEM_ID'] }}" action="{{ url_for('add_to_cart') }}" method="POST">
+                            <input type="hidden" name="item_id" value="{{ item['ITEM_ID'] }}">
+                            <div>
+                                <button type="button" onclick="decreaseQuantity(this)">-</button>
+                                <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center;" readonly>
+                                <button type="button" onclick="increaseQuantity(this)">+</button>
+                            </div>
+                            <button type="submit">Add to cart</button>
+                        </form>
+                    </div>
+                    {%endfor%}
+                   </div>
+            </div>
+           
     </div>
     <script>
         function increaseQuantity(button) {

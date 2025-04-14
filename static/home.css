@@ -7,17 +7,33 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f7f2;
+    background-color: #c0bfaa;
+    /* background: url('../static/images/canteen-background.jpg') no-repeat center center fixed; */
     color: #333;
     line-height: 1.6;
+    /* background-image: url('Images/Home.jpg'); Path to your image */
+    background-size: cover; /* Ensures the image covers the specified area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 100%; /* Full width */
+    height: 100vh; /* Full height of the viewport */
+    margin: 0px;
+    padding: 0px 0px 100px 0px; /* Padding to push content down */
+    font-family: 'Poppins', sans-serif; /* Optional: Set a font for the page */
+    color: #0099ff; /* Optional: Set a default text color */
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
+    /* width: 90%;
+    max-width: 1200px; */
     margin: 2rem auto;
     overflow: hidden;
+    border:2px;
 }
+
+img {
+    transform: translateY(100px);
+  }
 
 /* Header Styles */
 h1 {
@@ -48,7 +64,7 @@ h1::after {
     margin: 1.5rem 0;
     padding-left: 0.5rem;
     border-left: 5px solid #e74c3c;
-    color: #2c3e50;
+    color: #027cf5;
 }
 
 /* Menu Layout */
@@ -64,7 +80,31 @@ h1::after {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    margin-left: 0px;
+    margin-right: 0px;
     margin-bottom: 2rem;
+    padding: 1rem;
+    /* border: 2px solid #e74c3c; */
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.Fast-Food {
+    background-image: url('Images/fast-food.jpg');}
+
+.Nasta {
+    background-image: url('Images/nashta.jpg');
+}
+
+.Lunch {
+    background-image: url('Images/lunch.jpg');
+}
+
+.Beverages {
+    background-image: url('Images/beverages.jpg');
 }
 
 /* Menu Item Styling */
@@ -80,6 +120,17 @@ h1::after {
     flex-direction: column;
 }
 
+div.container-1 {
+    width: 100000px;
+    height: auto;
+    border-radius: 10px;
+    /* border:2px solid #e74c3c; */
+    padding: 3rem;
+    margin: 0 auto;
+    /* margin-bottom: 10px; */
+    margin-bottom: 0rem;
+}
+
 .menu-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -87,7 +138,7 @@ h1::after {
 
 .menu-item h2 {
     margin: 0.5rem 0;
-    color: #2c3e50;
+    color: #2c4c50;
     font-size: 1.4rem;
 }
 

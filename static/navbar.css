@@ -1,0 +1,78 @@
+/* Navbar Styling */
+.navbar {
+    background-color: #343a40; /* Dark background */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: flex-start;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100vh; /* Full height for vertical alignment */
+    width: 250px; /* Fixed width for the vertical navbar */
+    position: fixed; /* Fixed position on the left */
+    top: 0;
+    left: 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navbar-brand:hover {
+    color: #007bff; /* Highlight color */
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.navbar-nav .nav-item {
+    margin-bottom: 15px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    width: 100%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 4px;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #007bff; /* Highlight background */
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%; /* Full width for smaller screens */
+        height: auto; /* Adjust height */
+        position: relative; /* No fixed position */
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 10px;
+    }
+}
