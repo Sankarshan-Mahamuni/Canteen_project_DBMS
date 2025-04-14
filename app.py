@@ -154,33 +154,42 @@ def confirm_order():
     db.commit()
     return render_template('success.html', message="Order confirmed and payment processed successfully!")
 
-#updating ongoning orders to completed orders by changing the status pending to completed
-# @app.route('/update_order_status', methods=['POST'])
-# def update_order_status():
-#     order_id = request.form['order_id']
-#     new_status = request.form['status']
+@app.route('/token')
+def token():
+    prn = session.get('PRN')
+    if not prn:
+        return redirect(url_for('login'))
 
-#     db = get_db()
-#     cursor = db.cursor()
+    conn = get_db()
+    cur = conn.cursor(dictionary=True)
 
-#     if new_status == 'completed':
-#         cursor.execute("""
-#             UPDATE order_table
-#             SET STATUS = 1, PAYMENT_STATUS = 1
-#             WHERE ORDER_ID = %s
-#         """, (order_id,))
-#     else:
-#         cursor.execute("""
-#             UPDATE order_table
-#             SET STATUS = 0
-#             WHERE ORDER_ID = %s
-#         """, (order_id,))
+    # Fetch active order details
+    cur.execute("""
+        SELECT OT.ORDER_ID, OT.STATUS, OT.PAYMENT_STATUS, OT.TOTAL_AMOUNT, OT.ORDER_TIME
+        FROM ORDER_TABLE OT
+        WHERE OT.PRN = %s AND OT.STATUS = FALSE
+    """, (prn,))
+    order = cur.fetchone()
 
-#     db.commit()
-#     return jsonify({'message': 'Order status updated successfully'})
+    if not order:
+        flash("No active token available or order already completed.")
+        return redirect(url_for('home'))
 
-# from flask import request, redirect, url_for
-# from db import get_db  # if you're using a get_db() function
+    # Fetch cart items for the active order
+    cur.execute("""
+        SELECT M.NAME, O.QUANTITY, O.SUB_TOTAL
+        FROM MENU_ITEMS M
+        INNER JOIN ORDER_ITEMS O ON M.ITEM_ID = O.ITEM_ID
+        WHERE O.ORDER_ID = %s
+    """, (order['ORDER_ID'],))
+    items = cur.fetchall()
+
+    # Include date and time in the token
+    order_date = order['ORDER_TIME'].strftime('%Y-%m-%d')
+    order_time = order['ORDER_TIME'].strftime('%H:%M:%S')
+
+    return render_template('token.html', items=items, order_date=order_date, order_time=order_time, total_amount=order['TOTAL_AMOUNT'])
+
 
 @app.route('/update_order_status', methods=['POST'])
 def update_order_status():
@@ -239,23 +248,7 @@ def login():
             return redirect(url_for('home'))
     return render_template('login.html')
 
-@app.route('/canteen')
-# def canteen():
-#     today_date = datetime.now().strftime('%Y-%m-%d')
-#     current_time = datetime.now().strftime('%H:%M:%S')
-
-#     ongoing_orders = fetch_ongoing_orders()
-#     completed_orders = fetch_completed_orders()
-
-#     print(ongoing_orders)   #Debug: Log the fetched orders
-#     print(completed_orders)  # Debug: Log the fetched orders
-    
-#     return render_template('canteen.html', 
-#                            today_date=today_date, 
-#                            current_time=current_time,
-#                            ongoing_orders=ongoing_orders,
-#                            completed_orders=completed_orders)
-
+@app.route('/canteen')                    
 def canteen():
     today_date = datetime.now().strftime('%Y-%m-%d')
     current_time = datetime.now().strftime('%H:%M:%S')
@@ -308,25 +301,62 @@ def profile():
 def fetch_ongoing_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 0 OR status = 0 ")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 0 OR status = 0")
     result = cursor.fetchall()
+
+    for order in result:
+        order_id = order['ORDER_ID']
+        order['items_list'] = get_order_items_by_order_id(order_id)  # Fetch items for the specific order
+
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
     cursor.close()
     connection.close()
     return orders_dict
 
+
 # Fetch completed orders
 def fetch_completed_orders():
     connection = get_db()
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM order_table WHERE payment_status = 1 AND status = 1 ")
+    cursor.execute("SELECT * FROM order_table WHERE payment_status = 1 AND status = 1")
     result = cursor.fetchall()
+
+    for order in result:
+        order_id = order['ORDER_ID']
+        order['items_list'] = get_order_items_by_order_id(order_id)  # Fetch items for the specific order
+
     df = pd.DataFrame(result)
     orders_dict = df.to_dict(orient='records')
     cursor.close()
     connection.close()
     return orders_dict
+
+
+def get_order_items_by_order_id(order_id):
+    connection = get_db()
+    cursor = connection.cursor(dictionary=True)
+    query = """
+        SELECT m.name
+        FROM menu_items m
+        INNER JOIN order_items o ON m.item_id = o.item_id
+        WHERE o.order_id = %s;
+    """
+
+    # Execute the query
+    cursor.execute(query, (order_id,))
+
+    # Fetch all the results
+    result = cursor.fetchall()
+
+    # Convert the result to a list of item names
+    item_names = [row['name'] for row in result]
+
+    cursor.close()
+    connection.close()
+
+    return item_names
+
 
 if __name__ == "__main__":
     app.run(debug=True)
