@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Token</title>
+    <title>CANTEEN ORDER TICKET</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='token.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Order Token</h1>
-        <p style="color:aliceblue"><strong>Order Date:</strong> {{ order_date }}</p>
-        <p style="color:aliceblue"><strong>Order Time:</strong> {{ order_time }}</p>
-        <p style="color:aliceblue"><strong>Token Status:</strong> 
-            {% if items %}
-                <span class="valid">Valid</span>
-            {% else %}
-                <span class="expired">Expired</span>
-            {% endif %}
-        </p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Loop through cart items -->
-                {% for item in items %}
-                <tr>
-                    <td>{{ item.NAME }}</td>
-                    <td>{{ item.QUANTITY }}</td>
-                    <td>{{ item.SUB_TOTAL }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p><strong>Payment Successful!</strong> Please show this token at the canteen to collect your order.</p>
+        <h1>CANTEEN<br>ORDER TICKET</h1>
+        
+        <h2 class="order-token-title">ORDER TOKEN</h2>
+        <div class="token-number">{{ items[0].TOKEN_NUMBER }}</div>
+        
+        <div class="order-details">
+            <p><strong>Order Date:</strong> {{ order_date }}</p>
+            <p><strong>Order Time:</strong> {{ order_time }}</p>
+            <p><strong>Token Status:</strong> 
+                {% if items %}
+                    <span class="valid">VALID</span>
+                {% else %}
+                    <span class="expired">Expired</span>
+                {% endif %}
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.NAME }}</td>
+                        <td>{{ item.QUANTITY }}</td>
+                        <td>₹{{ item.SUB_TOTAL }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2" style="text-align: right;"><strong>Total:</strong></td>
+                        <td><strong>₹{{ total_amount }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="success-message">Payment Successful! Please show this token at the canteen to collect your order.</p>
+        </div>
     </div>
 </body>
 </html>

@@ -3,37 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIEW CART</title>
+    <title>Home Rasoi</title>
     <link rel="stylesheet" href="{{url_for('static', filename='view_cart.css')}}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div class="cart-container">
-        {% if items %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in items %}
-                    <tr>
-                        <td class="item-name">{{ item.NAME }}</td>
-                        <td class="quantity">{{ item.QUANTITY }}</td>
-                        <td class="price">₹{{ item.TOTAL }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="container">
+        <div class="menu-items">
+            {% for item in items %}
+            <div class="menu-item">
+                <div class="item-info">
+                    <span class="veg-icon"></span>
+                    <div class="item-name">{{ item.NAME }}</div>
+                    <div class="ratings">
+                        <span class="star">★★★★☆</span>
+                        <span class="rating-count">{{ item.QUANTITY }} ratings</span>
+                    </div>
+                    <div class="price">₹{{ item.TOTAL }}</div>
+                    <div class="description">{{ item.description }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Total Items:</span>
+                <span class="total-items">{{ items|length }}</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total Amount:</span>
+                <span class="total-amount">₹{{ items|sum(attribute='TOTAL') }}</span>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
             <form method="POST" action="/confirm_order">
                 <input type="hidden" name="prn" value="{{ session['PRN'] }}">
-                <button type="submit">Confirm Order</button>
+                <button type="submit" class="confirm-order-btn">Confirm Order</button>
             </form>
-        {% else %}
-            <p class="empty-cart">Your cart is empty.</p>
-        {% endif %}
+        </div>
     </div>
 </body>
 </html>

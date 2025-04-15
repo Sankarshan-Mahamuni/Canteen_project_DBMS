@@ -19,6 +19,7 @@
         <table id="ongoingOrdersTable">
             <thead>
                 <tr>
+                    <th>Sr. No.</th>
                     <th>PRN</th>
                     <th>Order ID</th>
                     <th>Items</th>
@@ -30,12 +31,15 @@
             <tbody>
                 {% for order in ongoing_orders %}
                     <tr>
+                        <td></td>
                         <td>{{ order.PRN }}</td>
                         <td>{{ order.ORDER_ID}}</td>
                         <td>
+                            <ul class="items-list">
                             {% for item in order.items_list %}
-                                {{ item }}<br>
+                                <li><span>{{ item }}</span></li>
                             {% endfor %}
+                            </ul>
                         </td>                        
                         <td>{{ order.TOTAL_AMOUNT}}</td>
                         <td>{{ order.PAYMENT_STATUS}}</td>
@@ -58,6 +62,7 @@
         <table id="completedOrdersTable">
             <thead>
                 <tr>
+                    <th>Sr. No.</th>
                     <th>PRN</th>
                     <th>Order ID</th>
                     <th>Items</th>
@@ -69,12 +74,15 @@
             <tbody>
                 {% for order in completed_orders %}
                     <tr>
+                        <td></td>
                         <td>{{ order.PRN }}</td>
                         <td>{{ order.ORDER_ID }}</td>
                         <td>
+                            <ul class="items-list">
                             {% for item in order.items_list %}
-                                {{ item }}<br>
+                                <li><span>{{ item }}</span></li>
                             {% endfor %}
+                            </ul>
                         </td>                     
                         <td>{{ order.TOTAL_AMOUNT}}</td>
                         <td>{{ order.PAYMENT_STATUS}}</td>
