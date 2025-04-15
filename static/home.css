@@ -39,7 +39,7 @@ img {
 h1 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #2c3e50;
+    color: #1b76d1;
     font-size: 2.5rem;
     position: relative;
     padding-bottom: 0.7rem;
@@ -64,7 +64,7 @@ h1::after {
     margin: 1.5rem 0;
     padding-left: 0.5rem;
     border-left: 5px solid #e74c3c;
-    color: #027cf5;
+    color: #24a9d1;
 }
 
 /* Menu Layout */
@@ -109,7 +109,7 @@ h1::after {
 
 /* Menu Item Styling */
 .menu-item {
-    background: #fff;
+    background: #ffffffcb;
     border-radius: 10px;
     overflow: hidden;
     width: calc(33.333% - 1rem);
@@ -138,12 +138,12 @@ div.container-1 {
 
 .menu-item h2 {
     margin: 0.5rem 0;
-    color: #2c4c50;
+    color: #000000;
     font-size: 1.4rem;
 }
 
 .menu-item p {
-    color: #555;
+    color: #000000;
     margin-bottom: 0.8rem;
     font-size: 0.95rem;
 }

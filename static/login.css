@@ -1,107 +1,104 @@
-/* Global styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #4e54c8, #8f94fb); /* Gradient background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  overflow: hidden;
-  color: #fff;
-  background-image: url('Images/canteen-3.jpg');
-  background-size: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 0;
+}
+body {
+/* background: url('./student_loginBG.jpg') no-repeat center center fixed; */
+/* background-size: cover; */
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+background-image: url('Images/canteen-3.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+.login-container {
+position: relative;
+z-index: 2;
+background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent for blending with the background */
+padding: 40px;
+border-radius: 20px; /* Softer rounded corners */
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Stronger shadow for a floating effect */
+width: 100%;
+max-width: 400px;
+text-align: center;
+backdrop-filter: blur(10px); /* Adds a subtle blur effect for a modern look */
+border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a soft border for better contrast */
 }
 
-
-
-/* Container styles */
-.container {
-  width: 100%;
-  max-width: 500px; /* Increased width */
-  padding: 3rem; /* Increased padding */
-  background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-  border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-  text-align: center;
+h2 {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-/* Content box styles */
-.content-box h2 {
-  font-size: 2.2rem; /* Slightly larger font size */
-  margin-bottom: 2rem; /* Increased spacing */
-  color: #33ccff; /* Neon blue */
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* Input group styles */
-.input-group {
-  margin-bottom: 2rem; /* Increased spacing between input groups */
-}
-
-.input-group label {
+label {
   display: block;
-  font-size: 1rem;
+  margin-bottom: 5px;
   font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #33ccff; /* Neon blue */
+  color: #555;
+  text-align: left;
 }
 
-.input-group input {
-  padding: 1rem; /* Increased padding for input fields */
-  font-size: 1.1rem; /* Slightly larger font size */
-  border-radius: 12px; /* Slightly more rounded corners */
-}
-
-.input-group input:focus {
-  border-color: #66ccff; /* Lighter neon blue */
-  box-shadow: 0 0 10px #33ccff;
-}
-
-/* Button styles */
-.buttons button {
-  padding: 1rem; /* Increased button padding */
-  font-size: 1.3rem; /* Slightly larger font size */
-}
-
-.buttons button {
+input {
   width: 100%;
-  padding: 0.8rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #fff;
-  background: #33ccff; /* Neon blue */
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #1976d2;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  background-color: #1976d2;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 10px;
 }
 
-.buttons button:hover {
-  background: #66ccff; /* Lighter neon blue */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+button:hover {
+  background-color: #0d47a1;
+  transform: scale(1.05);
 }
 
-.buttons button:active {
-  transform: scale(0.98);
+.signup-btn {
+  background-color: #9e9e9e;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .container {
-      width: 90%;
-      padding: 1.5rem;
-  }
+.signup-btn:hover {
+  background-color: #616161;
+}
 
-  .content-box h2 {
-      font-size: 1.8rem;
-  }
+.footer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #777;
+}
 
-  .buttons button {
-      font-size: 1rem;
-  }
+.footer a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }

@@ -8,50 +8,71 @@ body, h1, h3, p, table {
 /* Body Styling */
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f8f9fa;
-  color: #343a40;
+  background-color: #ffffff;
+  color: #2c3e50;
   line-height: 1.6;
-  padding: 20px;
-  background-image: url('Images/canteen-2.jpg');
-  background-size: cover;
+  padding: 0;
+  min-height: 100vh;
+  /* background-image: url('Images/canteen-2.jpg'); */
+  /* background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
 
 /* Container */
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 60px;
   background: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* Header */
 h1 {
   font-size: 2.5rem;
-  color: #007bff;
+  color: #2c3e50;
   text-align: center;
   margin-bottom: 20px;
+  padding-top: 20px;
+  transition: color 0.3s ease;
+}
+
+h1:hover {
+  color: #3498db;
 }
 
 .section-title {
   font-size: 1.5rem;
-  color: #495057;
+  color: #2c3e50;
   margin: 20px 0;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #3498db;
   display: inline-block;
   padding-bottom: 5px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.section-title:hover {
+  color: #3498db;
+  border-bottom-color: #2c3e50;
 }
 
 /* Date and Time */
 .date-time {
   font-size: 1rem;
-  color: #6c757d;
+  color: #2c3e50;
   text-align: center;
   margin-bottom: 20px;
+  padding: 0 20px;
+  transition: color 0.3s ease;
+}
+
+.date-time:hover {
+  color: #3498db;
 }
 
 /* Tables */
@@ -59,17 +80,26 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  table-layout: fixed;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 table thead {
-  background-color: #007bff;
+  background-color: #3498db;
   color: #ffffff;
+  position: sticky;
+  top: 0;
 }
 
 table th, table td {
   padding: 12px 15px;
   text-align: left;
-  border: 1px solid #dee2e6;
+  border: 1px solid #e0e0e0;
+  word-wrap: break-word;
+  transition: all 0.3s ease;
 }
 
 table tbody tr:nth-child(even) {
@@ -77,61 +107,105 @@ table tbody tr:nth-child(even) {
 }
 
 table tbody tr:hover {
-  background-color: #e9ecef;
+  background-color: #f1f9ff;
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+}
+
+table tbody tr:hover td {
+  color: #3498db;
 }
 
 /* Buttons */
 button {
-  background-color: #007bff;
+  background-color: #3498db;
   color: #ffffff;
   border: none;
   padding: 8px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
 /* Select Dropdown */
 select {
   padding: 5px 10px;
-  border: 1px solid #ced4da;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 0.9rem;
+  width: 100%;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  border-color: #3498db;
 }
 
 /* Summary Table */
 #summaryTable {
-  background-color: #e9ecef;
+  background-color: #ffffff;
   border-radius: 8px;
   overflow: hidden;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#summaryTable:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
 }
 
 #summaryTable thead {
-  background-color: #343a40;
+  background-color: #3498db;
   color: #ffffff;
 }
 
 #summaryTable tbody tr {
   font-weight: bold;
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+#summaryTable tbody tr:hover {
+  background-color: #f1f9ff;
+  color: #3498db;
+}
+
+/* Form in table cell */
+td form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  h1 {
-      font-size: 2rem;
+  .container {
+    padding: 10px 20px;
   }
 
-  .container {
-      padding: 10px;
+  h1 {
+    font-size: 2rem;
   }
 
   table th, table td {
-      font-size: 0.9rem;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
   }
 }

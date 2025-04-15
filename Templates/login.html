@@ -1,30 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-image: url('/static/Images/canteen-3.jpg');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.login-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent for blending with the background */
+  padding: 40px;
+  border-radius: 20px; /* Softer rounded corners */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Stronger shadow for a floating effect */
+  width: 100%;
+  max-width: 550px;
+  max-height: 600px;
+  text-align: center;
+  backdrop-filter: blur(10px); /* Adds a subtle blur effect for a modern look */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Adds a soft border for better contrast */
+}
 
+    h2 {
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #1976d2;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #1976d2;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #0d47a1;
+      transform: scale(1.05);
+    }
+
+    .signup-btn {
+      background-color: #9e9e9e;
+    }
+
+    .signup-btn:hover {
+      background-color: #616161;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .footer a {
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
 <body>
-  <div class="container">
-    <div class="content-box">
-      <h2>Login</h2>
-      <form method="post">
-      <div class="input-group">
-        <label for="PRN">PRN:</label>
-        <input type="text" id="PRN" name="PRN" required>
-      </div>
-      <div class="input-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-      <div class="buttons">
-        <button type="submit">Login</button>
-      </div>
-      </form>
+  <div class="login-container">
+    <h2>Student Login</h2>
+    <form  method="POST">
+      <label for="PRN">PRN:</label>
+      <input type="text" name="PRN" id="PRN" placeholder="Enter your PRN" required>
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+      <button type="submit">Login</button>
+      <button type="button" class="signup-btn" onclick="redirectTo('/signup')">Sign Up</button>
+    </form>
+    <div class="footer">
+      <p>Forgot your password? <a href="/reset_password">Reset it here</a>.</p>
     </div>
   </div>
+
+  <script>
+    function redirectTo(page) {
+      window.location.href = page;
+    }
+  </script>
 </body>
 </html>

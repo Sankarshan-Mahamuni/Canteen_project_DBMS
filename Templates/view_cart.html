@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIEW CART</title>
-    <link rel ="stylesheet" href="{{url_for('static', filename='view_cart.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='view_cart.css')}}">
 </head>
 <body>
-    {% if items %}
-        {% for item in items %}
-        <div class="item">
-            <h2>{{ item.NAME }}</h2>
-            <p>Quantity: {{ item.QUANTITY }}</p>
-            <p>Price: {{ item.TOTAL }}</p>
-            <br>
-        </div>
-        {% endfor %}
-        <form method="POST" action="/confirm_order">
-            <input type="hidden" name="prn" value="{{ session['PRN'] }}">
-            <button type="submit">Confirm Order</button>
-        </form>
-    {% else %}
-        <p>Your cart is empty.</p>
-    {% endif %}
+    <div class="cart-container">
+        {% if items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td class="item-name">{{ item.NAME }}</td>
+                        <td class="quantity">{{ item.QUANTITY }}</td>
+                        <td class="price">₹{{ item.TOTAL }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <form method="POST" action="/confirm_order">
+                <input type="hidden" name="prn" value="{{ session['PRN'] }}">
+                <button type="submit">Confirm Order</button>
+            </form>
+        {% else %}
+            <p class="empty-cart">Your cart is empty.</p>
+        {% endif %}
+    </div>
 </body>
 </html>

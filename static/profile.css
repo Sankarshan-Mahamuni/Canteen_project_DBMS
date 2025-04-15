@@ -1,55 +1,201 @@
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+/* Reset and Base Styles */
+* {
+    margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-h1, h2 {
-    color: #444;
+body {
+    background-color: #f0f7ff;
+    min-height: 100vh;
+    padding: 2rem;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('Images/profile.jpg');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* Container Styles */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+}
+
+h2 {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin: 1.5rem 0 1rem;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+}
+
+/* Wallet Balance */
+p {
+    background: rgba(28, 25, 25, 0.95);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(209, 202, 202, 0.274);
+    font-size: 1.8rem;
+    color: #4CAF50;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+    min-width: 200px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Table Container */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    margin-top: -12px;
+    max-width: 1200px;
+    background: rgba(28, 25, 25, 0.95);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(209, 202, 202, 0.274);
+}
+
+/* Table Header */
+th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 0.9rem;
+    border: none;
+}
+
+/* Table Body */
+td {
+    background: rgba(28, 25, 25, 0.95);
+    padding: 20px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    border: none;
+}
+
+/* First cell of each row */
+tr td:first-child {
+    border-radius: 8px 0 0 8px;
+    font-weight: 500;
+}
+
+/* Last cell of each row */
+tr td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+/* Add shadow to each row */
+tr td {
+    box-shadow: 0 2px 4px rgba(209, 202, 202, 0.274);
+}
+
+/* Status Styles */
+td:nth-last-child(1),
+td:nth-last-child(2) {
+    position: relative;
+    padding-left: 32px;
+}
+
+td:nth-last-child(1)::before,
+td:nth-last-child(2)::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* Completed Status */
+td:nth-last-child(1):contains('Completed')::before,
+td:nth-last-child(2):contains('Completed')::before {
+    background-color: #4CAF50;
+}
+
+/* Pending Status */
+td:nth-last-child(1):contains('Pending')::before,
+td:nth-last-child(2):contains('Pending')::before {
+    background-color: #f39c12;
+}
+
+/* Back Button */
 a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: #1a1a1a;
+    color: white;
     text-decoration: none;
-    color: #007BFF;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-top: 2rem;
+    transition: all 0.2s ease;
+    min-width: 150px;
+    box-shadow: 0 2px 4px rgba(209, 202, 202, 0.274);
 }
 
 a:hover {
-    text-decoration: underline;
+    background-color: #2a2a2a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(209, 202, 202, 0.274);
 }
 
-/* Table styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #fff;
+/* Amount Columns */
+td:nth-child(4),
+td:nth-child(5) {
+    font-weight: 500;
+    color: #4CAF50;
 }
 
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 16px;
+    }
+
+    p {
+        font-size: 1.5rem;
+        padding: 1.2rem;
+    }
 }
 
-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Wallet balance styles */
-p {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #28a745;
+/* Hover Effect */
+tr:hover td {
+    background-color: rgba(40, 37, 37, 0.95);
+    transition: background-color 0.2s ease;
 }
